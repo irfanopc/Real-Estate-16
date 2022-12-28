@@ -11,7 +11,14 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter a password'],
         minlength: [6, 'password must be at least 6 characters'],
         select: false,
-    }
+    },
+    properties: 
+        [
+            {type: mongoose.Schema.Types.ObjectId,
+            ref: 'property'
+            }
+        ]
+    
 });
 
 userSchema.pre('save', async function (next) {
