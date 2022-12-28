@@ -1,5 +1,9 @@
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+require('dotenv').config();
+
+
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -11,7 +15,14 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter a password'],
         minlength: [6, 'password must be at least 6 characters'],
         select: false,
-    }
+    },
+
+    properties: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'property'
+        }
+    ],
 });
 
 userSchema.pre('save', async function (next) {
@@ -20,6 +31,14 @@ userSchema.pre('save', async function (next) {
     }
     next();
 })
+
+userSchema.methods.matchPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+}
+
+userSchema.methods.generateToken = function () {
+    return jwt.sign({_id:this._id}, process.env.JWT_SECRET)
+}
 
 const User = mongoose.model('user', userSchema);
 
