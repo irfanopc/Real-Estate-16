@@ -17,12 +17,14 @@ const userSchema = new mongoose.Schema({
         select: false,
     },
 
+
     properties: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'property'
         }
     ],
+
 });
 
 userSchema.pre('save', async function (next) {

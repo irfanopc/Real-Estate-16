@@ -6,6 +6,15 @@ const signOut = require("./routes/Logout");
 const app = express();
 require('dotenv').config();
 
+
+const properties = require("./routes/properties")
+const getProperties = require("./routes/getProperties")
+
+
+app.use("/",properties)
+app.use("/",getProperties)
+
+
 const cookieParser = require('cookie-parser')
 
 app.use(express.urlencoded({extented: true}));
@@ -19,6 +28,7 @@ app.use(cookieParser());
 app.use("/api/v1",userRoute);
 app.use("/api/v1", signIn);
 app.use("/api/v1", signOut);
+
 
 
 const PORT = process.env.PORT || 5000
