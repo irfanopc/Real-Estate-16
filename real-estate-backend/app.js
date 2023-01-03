@@ -3,16 +3,20 @@ const connectDB = require("./database/connection");
 const  userRoute  = require("./routes/user");
 const signIn = require("./routes/SignIn");
 const signOut = require("./routes/Logout");
+const Search = require("./routes/Search");
 const app = express();
 require('dotenv').config();
+
+const cors = require("cors");
+
+app.use(cors({credentials: true}));
 
 
 const properties = require("./routes/properties")
 const getProperties = require("./routes/getProperties")
 
 
-app.use("/",properties)
-app.use("/",getProperties)
+
 
 
 const cookieParser = require('cookie-parser')
@@ -28,6 +32,10 @@ app.use(cookieParser());
 app.use("/api/v1",userRoute);
 app.use("/api/v1", signIn);
 app.use("/api/v1", signOut);
+app.use("/",properties);
+app.use("/",getProperties);
+app.use("/",Search);
+
 
 
 
