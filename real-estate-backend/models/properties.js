@@ -41,7 +41,7 @@ const propertySchema = new mongoose.Schema({
     views: { required: true, type: String },
     daysLeft: { required: true, type: String },
 
-    image: { type: String },
+    siteImage: { type: String },
     status: { type: String, default: "Unsold" },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

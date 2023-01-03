@@ -23,11 +23,12 @@ router.post('/signin', async (req, res) => {
         if(!isMatch) {
            return  res.status(400).json({
                 success: false,
-                message: 'Incorrect Password'
+                message: 'Incorrect Password',
             })
         }
 
         const token = await user.generateToken();
+   
 
         const options = {
             expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),

@@ -1,12 +1,13 @@
 const router = require('express').Router()
-const User = require('../models/user')
+// const { isAuthenticated } = require('../middlewears/auth');
+const User = require('../models/user');
 
-router.get('/userdetails', async(req,res)=>{
+router.get('/userdetails/:id', async(req,res)=>{
     try{
-        const userProperties = await User.find({
-            email:req.body.email
-        }).populate('properties')
-
+        const { id: userId } = req.params;
+  
+        const userProperties = await User.find({_id:userId}).populate("properties").sort({ createdAt: -1 })
+       
         if(!userProperties){
             
             return res.status(400).json({
@@ -15,11 +16,13 @@ router.get('/userdetails', async(req,res)=>{
             })
         }
         
+       if(userProperties){
         res.status(200).json({
             success:true,
-            userProperties:userProperties.reverse()
+            userProperties: userProperties
 
         })
+       } 
     }
     catch(error){
         res.status(500).json({
@@ -29,5 +32,6 @@ router.get('/userdetails', async(req,res)=>{
         
     }
    
-})
+});
+
 module.exports = router
