@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const cors = require("cors");
 
-app.use(cors({credentials: true}));
+app.use(cors());
 
 
 const properties = require("./routes/properties")
